@@ -2,19 +2,24 @@ var fs = require('fs');
 const http = require('http');
 const CombinedStream = require('combined-stream');
 
-var download = (chunks) => {
+var download = (url, chunks, chunkSize) => {
 
     let allP = [];
+    let tHost = url.substr(url.indexOf('//') + 2);
+    let host = tHost.substr(0, tHost.lastIndexOf('/'));
+    let path = tHost.substr(tHost.lastIndexOf('/'));
 
     for (let index = 1; index <= chunks; index++) {
         allP[index - 1] = new Promise((resolve, reject) => {
             var file = fs.createWriteStream(`part.file.${index}`);
             let opt = {
-                hostname: '028eed10.bwtest-aws.pravala.com',
+                // hostname: '028eed10.bwtest-aws.pravala.com',
+                host: host,
                 port: 80,
-                path: '/384MB.jar',
+                // path: '/384MB.jar',
+                path: path,
                 headers: {
-                    'Range': `bytes=${(index - 1) * 1048576}-${index * 1048576}`
+                    'Range': `bytes=${(index - 1) * chunkSize}-${index * chunkSize}`
                 }
             };
 
