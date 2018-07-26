@@ -2,7 +2,7 @@
 
 ## Install The Project
 ```
-npm install
+npm install http://028eed10.bwtest-aws.pravala.com/384MB.jar 4
 ```
 Run once, after getting the repository
 
